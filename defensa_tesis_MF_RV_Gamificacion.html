@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Defensa de Tesis · ISC. María Inés Orozco Delgadillo</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#ffffff;--bg2:#f7f7f6;--bg3:#f0efed;
+  --text1:#1a1915;--text2:#5f5e5a;--text3:#9a9890;
+  --border1:#e8e7e3;--border2:#d8d7d3;
+  --radius-lg:12px;--radius-md:8px;
+}
+body{font-family:'Source Sans 3',sans-serif;color:var(--text1);background:var(--bg2);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;}
+.pres{max-width:960px;width:100%;background:var(--bg);border-radius:16px;border:1px solid var(--border1);padding:2rem 2.5rem 1.5rem;box-shadow:0 4px 24px rgba(0,0,0,.06);}
+.slide{display:none;flex-direction:column;min-height:560px;animation:fadeIn .3s ease;}
+.slide.active{display:flex;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.slide-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border1);}
+.slide-num{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:1px;white-space:nowrap;padding-top:4px;}
+.slide-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;line-height:1.3;}
+.slide-sub{font-size:12px;color:var(--text2);margin-top:3px;}
+.nav-bar{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 0 0;margin-top:auto;border-top:1px solid var(--border1);}
+.nav-btn{background:transparent;border:1px solid var(--border2);border-radius:8px;padding:9px 20px;font-size:13px;cursor:pointer;color:var(--text1);font-family:'Source Sans 3',sans-serif;transition:background .15s;}
+.nav-btn:hover{background:var(--bg2);}
+.nav-btn:disabled{opacity:.3;cursor:default;}
+.dots{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:340px;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--border2);cursor:pointer;transition:all .2s;}
+.dot.active{background:#534AB7;width:18px;border-radius:4px;}
+.card{background:var(--bg);border:1px solid var(--border1);border-radius:var(--radius-lg);padding:1.25rem;}
+.card h3{font-size:13px;font-weight:500;margin-bottom:.75rem;color:var(--text2);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1rem;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:1rem;}
+.row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border1);font-size:12px;}
+.row:last-child{border-bottom:none;}
+.rl{color:var(--text2);flex:1;padding-right:8px;}
+.rv{font-weight:500;text-align:right;}
+.sig{font-size:10px;padding:2px 7px;border-radius:4px;background:#E1F5EE;color:#085041;font-weight:600;margin-left:5px;}
+.bar-w{margin-bottom:10px;}
+.bar-lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:4px;}
+.bar-t{background:var(--border1);border-radius:4px;height:7px;overflow:hidden;}
+.bar-f{height:100%;border-radius:4px;}
+.badge{display:inline-block;padding:3px 11px;border-radius:8px;font-size:11px;font-weight:600;margin:0 3px 6px;}
+.bp{background:#EEEDFE;color:#3C3489;}.bt{background:#E1F5EE;color:#085041;}.bc{background:#FAECE7;color:#712B13;}.bb{background:#E6F1FB;color:#0C447C;}
+.scard{background:var(--bg2);border-radius:var(--radius-md);padding:1rem;text-align:center;}
+.sv{font-size:26px;font-weight:500;line-height:1.2;}
+.sl{font-size:11px;color:var(--text2);margin-top:3px;line-height:1.4;}
+.sa{font-size:11px;font-weight:600;margin-top:3px;}
+.ap{color:#534AB7;}.at{color:#0F6E56;}
+.tl{position:relative;padding-left:26px;}
+.tl::before{content:'';position:absolute;left:9px;top:0;bottom:0;width:1px;background:var(--border1);}
+.tl-item{position:relative;margin-bottom:12px;}
+.tl-dot{position:absolute;left:-21px;top:4px;width:10px;height:10px;border-radius:50%;border:2px solid #7F77DD;background:var(--bg);}
+.tl-dot.teal{border-color:#1D9E75;}.tl-dot.gray{border-color:#9a9890;}
+.tl-h{font-size:13px;font-weight:500;}
+.tl-b{font-size:12px;color:var(--text2);margin-top:2px;line-height:1.5;}
+.tl-t{font-size:11px;color:#534AB7;font-weight:600;}
+.pill{font-size:11px;padding:3px 10px;border-radius:20px;border:1px solid var(--border1);color:var(--text2);}
+.pill-row{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;}
+.note{background:var(--bg2);border-radius:var(--radius-md);padding:1rem;font-size:12px;color:var(--text2);line-height:1.65;margin-top:.75rem;}
+.note strong{font-weight:500;color:var(--text1);}
+.slbl{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:.8px;text-transform:uppercase;margin-bottom:.5rem;}
+.tpi{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border1);font-size:12px;}
+.tpi:last-child{border-bottom:none;}
+.tpk{font-weight:500;min-width:80px;flex-shrink:0;}
+.tpv{color:var(--text2);line-height:1.5;}
+.ab{font-size:10px;padding:2px 7px;border-radius:3px;font-weight:600;margin-left:4px;}
+.ab-g{background:#E1F5EE;color:#085041;}.ab-o{background:#EAF3DE;color:#27500A;}.ab-l{background:#FAEEDA;color:#633806;}
+/* fotos */
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.25rem;}
+.photo-card{border-radius:var(--radius-lg);overflow:hidden;position:relative;background:var(--bg2);}
+.photo-card img{width:100%;height:210px;object-fit:cover;display:block;}
+.photo-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.68));color:#fff;font-size:11px;padding:22px 12px 9px;line-height:1.4;}
+.photo-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem;}
+.photo-strip-item{border-radius:var(--radius-md);overflow:hidden;position:relative;background:var(--bg2);}
+.photo-strip-item img{width:100%;height:140px;object-fit:cover;display:block;}
+.photo-strip-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.72));color:#fff;font-size:10px;padding:16px 7px 6px;line-height:1.3;text-align:center;}
+/* conclusiones */
+.cb{display:flex;gap:12px;padding:1rem 1.25rem;background:var(--bg);border:1px solid var(--border1);border-radius:var(--radius-lg);margin-bottom:.75rem;}
+.cdot{width:13px;height:13px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.ct{font-size:13px;font-weight:500;margin-bottom:5px;}
+.cbody{font-size:12px;color:var(--text2);line-height:1.65;}
+/* implicaciones */
+.ib{display:flex;gap:12px;padding:.875rem 1rem;background:var(--bg);border:1px solid var(--border1);border-radius:var(--radius-lg);margin-bottom:.625rem;}
+.in{font-size:14px;font-weight:600;color:var(--text3);flex-shrink:0;width:22px;}
+.ibody{font-size:12px;color:var(--text2);line-height:1.65;}
+.ibody strong{font-weight:500;color:var(--text1);}
+/* rv chart */
+.rv-st{font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--text3);margin:12px 0 6px;}
+.rv-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.rv-lbl{font-size:12px;color:var(--text2);width:160px;flex-shrink:0;text-align:right;}
+.rv-tr{flex:1;background:var(--border1);border-radius:6px;height:17px;position:relative;overflow:visible;}
+.rv-fill{height:100%;border-radius:6px;transition:width .8s ease;position:relative;}
+.rv-dot{position:absolute;right:-7px;top:50%;transform:translateY(-50%);width:15px;height:15px;border-radius:50%;border:2px solid var(--bg);box-shadow:0 0 0 1px rgba(0,0,0,.1);}
+.rv-sc{font-size:12px;font-weight:500;width:50px;flex-shrink:0;}
+.rv-pc{font-size:11px;color:var(--text3);width:42px;flex-shrink:0;}
+.rv-div{height:1px;background:var(--border1);margin:10px 0;}
+/* futuras */
+.fb{display:flex;gap:12px;padding:.875rem 1rem;border-bottom:1px solid var(--border1);font-size:12px;line-height:1.65;}
+.fb:last-child{border-bottom:none;}
+.fn{font-size:20px;font-weight:300;color:var(--text3);flex-shrink:0;width:28px;line-height:1;}
+.fbody{color:var(--text2);}
+.fbody strong{font-weight:500;color:var(--text1);}
+.gender-strip{display:flex;height:28px;border-radius:6px;overflow:hidden;margin:8px 0;}
+.gf{background:#7F77DD;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;}
+.gm{background:#B4B2A9;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;}
+.chart-full{position:relative;width:100%;height:230px;margin-bottom:1rem;}
+.chart-half{position:relative;width:100%;height:210px;margin-bottom:1rem;}
+@media(max-width:600px){
+  body{padding:12px 8px;}
+  .pres{padding:1.25rem 1rem 1rem;}
+  .two-col,.three-col,.photo-grid,.photo-strip{grid-template-columns:1fr;}
+  .rv-lbl{width:110px;font-size:11px;}
+  .slide-title{font-size:18px;}
+}
+</style>
+</head>
+<body>
+<div class="pres">
+
+<!-- S0 PORTADA -->
+<div class="slide active" id="s0">
+  <div class="slide-header">
+    <div class="slide-num">01 / 12</div>
+    <div><div class="slide-title">Presentación de Tesis</div><div class="slide-sub">Defensa · Universidad Autónoma de Nayarit</div></div>
+  </div>
+  <div style="background:var(--bg2);border-radius:var(--radius-lg);padding:2rem;text-align:center;margin-bottom:1.5rem;">
+    <div style="margin-bottom:12px;"><span class="badge bp">Mindfulness</span><span class="badge bt">Realidad Virtual 360°</span><span class="badge bc">Gamificación</span><span class="badge bb">TPACK</span></div>
+    <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:600;line-height:1.45;margin-bottom:.875rem;">Estrategia Didáctica Basada en Mindfulness, Realidad Virtual y Gamificación para el Aprendizaje en la Educación Superior: Un Enfoque TPACK</div>
+    <div style="font-size:13px;color:var(--text2);line-height:1.7;">ISC. María Inés Orozco Delgadillo<br><span style="color:var(--text3);">Universidad Autónoma de Nayarit · Unidad Académica de Odontología · Programa Académico de Cirujano Dentista</span></div>
+  </div>
+  <div class="two-col">
+    <div class="card"><h3>Datos del estudio</h3>
+      <div class="row"><span class="rl">Periodo</span><span class="rv">Enero – Junio 2024</span></div>
+      <div class="row"><span class="rl">Diseño</span><span class="rv">Pre-experimental G O₁ X O₂</span></div>
+      <div class="row"><span class="rl">Alcance</span><span class="rv">Descriptivo-correlacional</span></div>
+      <div class="row"><span class="rl">Muestra</span><span class="rv">n = 30 estudiantes</span></div>
+      <div class="row"><span class="rl">Análisis estadístico</span><span class="rv">jamovi v2.6</span></div>
+    </div>
+    <div class="card"><h3>Variables e instrumentos</h3>
+      <div class="row"><span class="rl">Rendimiento académico</span><span class="rv">EAI / TRAILS (49 ítems)</span></div>
+      <div class="row"><span class="rl">Aceptación de RV</span><span class="rv">Huang et al. (2023) · 21 ítems</span></div>
+      <div class="row"><span class="rl">Motivación situacional</span><span class="rv">SIMS · Guay et al. (2000)</span></div>
+      <div class="row"><span class="rl">Marco teórico</span><span class="rv">TPACK + TAM + TAD + Flujo</span></div>
+      <div class="row"><span class="rl">Programa MF</span><span class="rv">Equilibrio Emocional Basado en MF</span></div>
+    </div>
+  </div>
+  <div class="note" style="text-align:center;">Investigación pionera en la integración simultánea de Mindfulness mediado por RV, Gamificación y marco TPACK en un entorno curricular universitario formal, con medición de tres constructos en estudiantes del área de la salud.</div>
+</div>
+
+<!-- S1 PARTICIPANTES -->
+<div class="slide" id="s1">
+  <div class="slide-header"><div class="slide-num">02 / 12</div><div><div class="slide-title">Participantes y Metodología</div><div class="slide-sub">Diseño pre-experimental · Criterios de inclusión · Ética</div></div></div>
+  <div class="three-col">
+    <div class="scard"><div class="sv">30</div><div class="sl">Estudiantes · nuevo ingreso<br>Cirujano Dentista · 18–20 años</div></div>
+    <div class="scard" style="text-align:left;padding:1rem;">
+      <div style="font-size:12px;font-weight:500;color:var(--text2);margin-bottom:8px;">Distribución por sexo</div>
+      <div class="gender-strip"><div class="gf" style="width:53.3%;">16 M</div><div class="gm" style="width:46.7%;">14 H</div></div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-top:5px;"><span><span style="color:#7F77DD;font-weight:500;">53.3%</span> Mujeres</span><span><span style="color:#888780;font-weight:500;">46.7%</span> Hombres</span></div>
+    </div>
+    <div class="scard" style="text-align:left;padding:1rem;">
+      <div style="font-size:12px;font-weight:500;color:var(--text2);margin-bottom:8px;">Experiencia previa</div>
+      <div class="bar-w"><div class="bar-lbl"><span>Sin exp. Mindfulness</span><span style="color:#534AB7;font-weight:500;">89.7%</span></div><div class="bar-t"><div class="bar-f" style="width:89.7%;background:#7F77DD;"></div></div></div>
+      <div class="bar-w" style="margin-bottom:0;"><div class="bar-lbl"><span>Sin exp. Realidad Virtual</span><span style="color:#0F6E56;font-weight:500;">96.4%</span></div><div class="bar-t"><div class="bar-f" style="width:96.4%;background:#1D9E75;"></div></div></div>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="card"><h3>Consideraciones éticas y muestreo</h3>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-h">Consentimiento informado</div><div class="tl-b">Todos firmaron voluntariamente antes del inicio (Anexo A).</div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-h">Autorización institucional</div><div class="tl-b">Director de Unidad Académica, Coordinadora del Programa y Encargada de Tutorías (Anexos B y C).</div></div>
+        <div class="tl-item"><div class="tl-dot teal"></div><div class="tl-h">Acompañamiento psicopedagógico</div><div class="tl-b">Psicóloga F. González disponible durante toda la intervención. Ningún caso requirió atención.</div></div>
+        <div class="tl-item"><div class="tl-dot gray"></div><div class="tl-h">Muestreo no probabilístico por conveniencia</div><div class="tl-b">Grupo asignado institucionalmente al docente-investigador (Creswell, 2019).</div></div>
+      </div>
+    </div>
+    <div class="card"><h3>Tamaño muestral por instrumento</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="text-align:center;padding:.875rem;background:var(--bg2);border-radius:var(--radius-md);"><div style="font-size:24px;font-weight:500;">30</div><div style="font-size:11px;color:var(--text2);margin-top:3px;">EAI Preprueba</div></div>
+        <div style="text-align:center;padding:.875rem;background:var(--bg2);border-radius:var(--radius-md);"><div style="font-size:24px;font-weight:500;">30</div><div style="font-size:11px;color:var(--text2);margin-top:3px;">EAI Posprueba</div></div>
+        <div style="text-align:center;padding:.875rem;background:var(--bg2);border-radius:var(--radius-md);"><div style="font-size:24px;font-weight:500;">28</div><div style="font-size:11px;color:var(--text2);margin-top:3px;">Cuestionario RV</div></div>
+        <div style="text-align:center;padding:.875rem;background:var(--bg2);border-radius:var(--radius-md);"><div style="font-size:24px;font-weight:500;">29</div><div style="font-size:11px;color:var(--text2);margin-top:3px;">SIMS</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--text3);margin-top:10px;line-height:1.5;">Variaciones en n: RV y SIMS se aplicaron en días distintos; la asistencia varió levemente.</div>
+    </div>
+  </div>
+</div>
+
+<!-- S2 TPACK -->
+<div class="slide" id="s2">
+  <div class="slide-header"><div class="slide-num">03 / 12</div><div><div class="slide-title">Diseño Instruccional: Marco TPACK</div><div class="slide-sub">Mishra y Koehler (2006) · 7 dominios integrados · Unidad 2: Recuperación de la Información (TCGI)</div></div></div>
+  <div class="photo-grid">
+    <div class="photo-card">
+      <img src="https://raw.githubusercontent.com/mariainesorozco/Tesis/main/oculus01.JPG" alt="Alumnos con visores Oculus">
+      <div class="photo-cap">Estudiantes en sesión de Mindfulness con visores Oculus 360° · TK aplicado</div>
+    </div>
+    <div class="photo-card">
+      <img src="https://raw.githubusercontent.com/mariainesorozco/Tesis/main/gmequipos.jpg" alt="Actividad gamificada en equipos">
+      <div class="photo-cap">Actividad gamificada colaborativa en equipos · TPK aplicado</div>
+    </div>
+  </div>
+  <div class="slbl">Operacionalización de los 7 dominios</div>
+  <div class="card" style="margin-bottom:1rem;">
+    <div class="tpi"><div class="tpk">CK</div><div class="tpv">Alfabetización Informacional: fases de búsqueda, lógica booleana, bases de datos académicas, redacción con fuentes especializadas.</div></div>
+    <div class="tpi"><div class="tpk">PK</div><div class="tpv">Estrategias socioemocionales (MF), evaluación formativa mediante gamificación, aprendizaje colaborativo, progresión cognitiva Bloom (Anderson & Krathwohl, 2001).</div></div>
+    <div class="tpi"><div class="tpk">TK</div><div class="tpv">Visores Oculus 360°, Google Classroom, Kahoot+Escape Room, Wayground+Serpientes y Escaleras, Connected Papers, Research Rabbit, DOAJ, Semantic Scholar, IA generativa.</div></div>
+    <div class="tpi"><div class="tpk">PCK</div><div class="tpv">Progresión desde identificar necesidades informacionales hasta producir ensayo académico. MF como respuesta al estrés en búsqueda de información.</div></div>
+    <div class="tpi"><div class="tpk">TCK</div><div class="tpv">Herramientas específicas por contenido: booleanos en Google Académico; Connected Papers para grafo visual; RV 360° como potenciador de telepresencia meditativa.</div></div>
+    <div class="tpi"><div class="tpk">TPK</div><div class="tpv">Kahoot+Escape Room (pensamiento crítico en equipo); Wayground+Serpientes y Escaleras (azar + evaluación); RV como facilitador de inmersión meditativa.</div></div>
+    <div class="tpi"><div class="tpk">TPACK</div><div class="tpv">Coherencia funcional: S1→Kahoot; S2→booleanos; S3→bases de datos; S4→ensayo. Contenido, pedagogía y tecnología como dimensiones inseparables.</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+    <div class="card" style="padding:.875rem;text-align:center;"><div style="font-size:11px;font-weight:600;color:#534AB7;margin-bottom:4px;">TEMA 1</div><div style="font-size:12px;font-weight:500;">Fases del proceso de búsqueda</div><div style="font-size:11px;color:var(--text2);margin-top:4px;">Reconocer · Identificar</div></div>
+    <div class="card" style="padding:.875rem;text-align:center;"><div style="font-size:11px;font-weight:600;color:#1D9E75;margin-bottom:4px;">TEMA 2</div><div style="font-size:12px;font-weight:500;">Lógica booleana y estrategias</div><div style="font-size:11px;color:var(--text2);margin-top:4px;">Comprender · Aplicar</div></div>
+    <div class="card" style="padding:.875rem;text-align:center;"><div style="font-size:11px;font-weight:600;color:#D85A30;margin-bottom:4px;">TEMA 3</div><div style="font-size:12px;font-weight:500;">Bases de datos y mapeo</div><div style="font-size:11px;color:var(--text2);margin-top:4px;">Aplicar · Analizar</div></div>
+    <div class="card" style="padding:.875rem;text-align:center;"><div style="font-size:11px;font-weight:600;color:#378ADD;margin-bottom:4px;">TEMA 4</div><div style="font-size:12px;font-weight:500;">Redacción de ensayo académico</div><div style="font-size:11px;color:var(--text2);margin-top:4px;">Evaluar · Crear</div></div>
+  </div>
+</div>
+
+<!-- S3 PROGRAMA MF -->
+<div class="slide" id="s3">
+  <div class="slide-header"><div class="slide-num">04 / 12</div><div><div class="slide-title">Programa Equilibrio Emocional Basado en Mindfulness</div><div class="slide-sub">4 sesiones formales con RV 360° · 2 actividades complementarias sin RV</div></div></div>
+  <div class="photo-strip">
+    <div class="photo-strip-item"><img src="https://raw.githubusercontent.com/mariainesorozco/Tesis/main/vrmf01.png" alt="S1"><div class="photo-strip-cap">S1 · Vida Tranquila<br>12:47 min</div></div>
+    <div class="photo-strip-item"><img src="https://raw.githubusercontent.com/mariainesorozco/Tesis/main/vrmf02.png" alt="S2"><div class="photo-strip-cap">S2 · Paz Interior<br>15:47 min</div></div>
+    <div class="photo-strip-item"><img src="https://raw.githubusercontent.com/mariainesorozco/Tesis/main/vrmf03.png" alt="S3"><div class="photo-strip-cap">S3 · Emociones Positivas<br>13:05 min</div></div>
+    <div class="photo-strip-item"><img src="https://raw.githubusercontent.com/mariainesorozco/Tesis/main/vrmf04.png" alt="S4"><div class="photo-strip-cap">S4 · Realidades Posibles<br>15:07 min</div></div>
+  </div>
+  <div class="tl" style="margin-bottom:1rem;">
+    <div class="tl-item"><div class="tl-dot gray"></div><div><div class="tl-h" style="color:var(--text2);">Actividad previa: Mindful Eating — Uva Pasa (Kabat-Zinn, 1991)</div><div class="tl-b">Sin RV · Sensibilización introductoria · No forma parte del tratamiento medido.</div></div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-h">S1: Aprende a Llevar una Vida Tranquila <span class="tl-t">12:47 min</span></div><div class="tl-b">Arrecife de coral · Observar pensamientos sin juicio · Regulación atencional. Antes de Kahoot.</div></div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-h">S2: Paz Interior <span class="tl-t">15:47 min</span></div><div class="tl-b">Auroras boreales · Río Knik, Alaska · Visualización multisensorial. Antes de trabajo con booleanos.</div></div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-h">S3: Emociones Positivas <span class="tl-t">13:05 min</span></div><div class="tl-b">Cascada tropical · Activación de ternura, alegría y amor · Teoría de Ampliación y Construcción (Fredrickson, 2001).</div></div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div><div class="tl-h">S4: Realidades Posibles <span class="tl-t">15:07 min</span></div><div class="tl-b">Playa en Sri Lanka · Visualización de sueños cumplidos · Autoeficacia (Bandura, 1997). Antes del ensayo.</div></div></div>
+    <div class="tl-item"><div class="tl-dot teal"></div><div><div class="tl-h" style="color:var(--text2);">Actividad de cierre: Meditación del Corazón (Mario Alonso Puig) — 11:16 min</div><div class="tl-b">Sin RV · Gratitud, autoperdón, petición de guía · Cierre emocional · No forma parte del tratamiento medido.</div></div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:200px 1fr;gap:12px;align-items:stretch;">
+    <div class="photo-card" style="min-height:110px;"><img src="https://raw.githubusercontent.com/mariainesorozco/Tesis/main/mfcierre.jpg" alt="Cierre" style="height:130px;"><div class="photo-cap">Meditación del Corazón · Cierre</div></div>
+    <div class="note" style="margin-top:0;"><strong>Progresión:</strong> Regulación reactiva (S1) → Expansión sensorial (S2) → Activación emocional deliberada (S3) → Creación proactiva / autoeficacia (S4).<br><br>Entornos: licencia Envato Elements (S1, S3, S4); S2 = William Briscoe Photography (YouTube). Meditaciones: canal Mindful Science (YouTube).</div>
+  </div>
+</div>
+
+<!-- S4 INSTRUMENTOS -->
+<div class="slide" id="s4">
+  <div class="slide-header"><div class="slide-num">05 / 12</div><div><div class="slide-title">Instrumentos de Medición</div><div class="slide-sub">Validez por expertos · Autorización formal de autores · Adaptación contextual</div></div></div>
+  <div style="display:grid;gap:12px;">
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;"><div><div style="font-size:14px;font-weight:500;">EAI — Evaluación de la Alfabetización Informacional</div><div style="font-size:12px;color:var(--text2);margin-top:3px;">Adaptado de TRAILS · 49 ítems · Opción múltiple · Pre y posprueba (~60 min c/u)</div></div><span class="badge bp">Rendimiento</span></div><div class="pill-row"><div class="pill">3 constructos: Desarrollo del Tema · Estrategias de Búsqueda · Comunicación</div><div class="pill">Validación: 3 expertos docentes TCGI</div></div></div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;"><div><div style="font-size:14px;font-weight:500;">Cuestionario de Aceptación de Realidad Virtual</div><div style="font-size:12px;color:var(--text2);margin-top:3px;">Huang et al. (2023) · TAM extendido + Teoría de Flujo · 21 ítems + 3 sociodemográficos · Likert 1–7</div></div><span class="badge bt">Aceptación RV</span></div><div class="pill-row"><div class="pill">7 constructos · 3 ítems c/u</div><div class="pill">CFA original n=251 · RMSEA=.033</div><div class="pill">Autorización Dr. Chia-Pin Yu (Anexo M)</div></div></div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;"><div><div style="font-size:14px;font-weight:500;">SIMS — Escala de Motivación Situacional</div><div style="font-size:12px;color:var(--text2);margin-top:3px;">Guay et al. (2000) · Teoría de la Autodeterminación · 16 ítems · 4 subescalas · Likert 1–7</div></div><span class="badge bc">Motivación</span></div><div class="pill-row"><div class="pill">MI · RI · RE · DM</div><div class="pill">Validación: 5 estudios (Guay et al., 2000)</div><div class="pill">Autorización Dr. Frédéric Guay (Anexo N)</div></div></div>
+  </div>
+</div>
+
+<!-- S5 DESCRIPTIVOS -->
+<div class="slide" id="s5">
+  <div class="slide-header"><div class="slide-num">06 / 12</div><div><div class="slide-title">Rendimiento Académico — Estadística Descriptiva</div><div class="slide-sub">EAI · 49 ítems · n = 30 · Puntajes como % de aciertos</div></div></div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem;">
+    <div class="scard"><div class="sv" style="color:#888780;">37.8%</div><div class="sl">Preprueba · Media (DE=12.4)</div><div class="sa" style="color:#888780;">0 / 30 aprobados</div></div>
+    <div class="scard"><div class="sv at">82.3%</div><div class="sl">Posprueba · Media (DE=7.17)</div><div class="sa at">30 / 30 aprobados</div></div>
+    <div class="scard"><div class="sv ap">+44.5</div><div class="sl">Diferencia de medias (p.p.)</div><div class="sa ap">+43.5 Mdn</div></div>
+    <div class="scard"><div class="sv" style="color:#D85A30;">−5.23</div><div class="sl">Reducción en DE · Homogeneización</div><div class="sa" style="color:#D85A30;">12.4 → 7.17</div></div>
+  </div>
+  <div class="chart-full"><canvas id="perfChart"></canvas></div>
+  <div class="two-col">
+    <div class="card"><h3>Preprueba</h3>
+      <div class="row"><span class="rl">Media / Mediana</span><span class="rv">37.8% / 39.1%</span></div>
+      <div class="row"><span class="rl">Mín / Máx</span><span class="rv">10.9% / 56.5%</span></div>
+      <div class="row"><span class="rl">Asimetría / Curtosis</span><span class="rv">−.614 / −.164</span></div>
+      <div class="row"><span class="rl">Shapiro-Wilk</span><span class="rv">W=.947, p=.143 <span class="sig">Normal</span></span></div>
+    </div>
+    <div class="card"><h3>Posprueba</h3>
+      <div class="row"><span class="rl">Media / Mediana</span><span class="rv">82.3% / 82.6%</span></div>
+      <div class="row"><span class="rl">Mín / Máx</span><span class="rv">60.9% / 95.7%</span></div>
+      <div class="row"><span class="rl">Asimetría / Curtosis</span><span class="rv">−.850 / 1.77 (leptocúrtica)</span></div>
+      <div class="row"><span class="rl">Shapiro-Wilk</span><span class="rv">W=.948, p=.150 <span class="sig">Normal</span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- S6 INFERENCIAL -->
+<div class="slide" id="s6">
+  <div class="slide-header"><div class="slide-num">07 / 12</div><div><div class="slide-title">Rendimiento Académico — Estadística Inferencial</div><div class="slide-sub">Prueba t pareada + Wilcoxon · Diferencia por sexo · Tamaño del efecto</div></div></div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem;">
+    <div class="scard"><div class="sv ap">t = −16.0</div><div class="sl">t Student · gl=29 · p &lt; .001</div><div class="sa at">Altamente significativo</div></div>
+    <div class="scard"><div class="sv ap">d = 2.93</div><div class="sl">d Cohen · IC95% [2.09, 3.76]</div><div class="sa ap">Extraordinario (&gt;.80)</div></div>
+    <div class="scard"><div class="sv at">W = .00</div><div class="sl">Wilcoxon · p&lt;.001 · rb=−1.00</div><div class="sa at">30 / 30 mejoraron</div></div>
+    <div class="scard"><div class="sv ap">SW diff</div><div class="sl">Normalidad diferencias W=.970, p=.542</div><div class="sa ap">Supuesto cumplido</div></div>
+  </div>
+  <div class="two-col">
+    <div class="card"><h3>Prueba t para muestras pareadas</h3>
+      <div class="row"><span class="rl">Diferencia de medias</span><span class="rv">−44.6 pts (EE=2.78)</span></div>
+      <div class="row"><span class="rl">t / gl / p</span><span class="rv">−16.0 / 29 / &lt;.001 <span class="sig">Sig.</span></span></div>
+      <div class="row"><span class="rl">d de Cohen</span><span class="rv">2.93 · IC95%: [2.09, 3.76]</span></div>
+      <div class="row"><span class="rl">Wilcoxon W / rb</span><span class="rv">.00 / −1.00</span></div>
+    </div>
+    <div class="card"><h3>Diferencia por sexo (posprueba)</h3>
+      <div class="row"><span class="rl">t / gl / p</span><span class="rv">2.09 / 28 / .045 <span class="sig">Sig.</span></span></div>
+      <div class="row"><span class="rl">Diferencia de medias</span><span class="rv">5.20 pts (EE=2.48)</span></div>
+      <div class="row"><span class="rl">d de Cohen</span><span class="rv">0.767 · IC95%: [.016, 1.50]</span></div>
+      <div class="row"><span class="rl">U Mann-Whitney / rb</span><span class="rv">64.5 · p=.049 / −.424</span></div>
+    </div>
+  </div>
+  <div class="note"><strong>Conclusión:</strong> Se rechaza la hipótesis nula. La estrategia produjo un cambio de magnitud extraordinaria (d=2.93). La prueba de Wilcoxon (rb=−1.00) confirma que los 30 estudiantes mejoraron, pasando de 0% a 100% con nivel aprobatorio.</div>
+</div>
+
+<!-- S7 RV -->
+<div class="slide" id="s7">
+  <div class="slide-header"><div class="slide-num">08 / 12</div><div><div class="slide-title">Aceptación de la Realidad Virtual</div><div class="slide-sub">Huang et al. (2023) · TAM + Teoría de Flujo · n=28 · Likert 1–7 · Media global 6.28/7 (89.7%)</div></div></div>
+  <div style="margin-bottom:1rem;">
+    <div class="rv-st">TAM — Factores Utilitarios y Conductuales</div>
+    <div class="rv-row"><div class="rv-lbl">Actitud</div><div class="rv-tr"><div class="rv-fill" id="rv0" style="width:0%;background:#7F77DD;"><div class="rv-dot" style="background:#7F77DD;"></div></div></div><div class="rv-sc ap">6.70</div><div class="rv-pc">95.7%</div></div>
+    <div class="rv-row"><div class="rv-lbl">Facilidad de Uso</div><div class="rv-tr"><div class="rv-fill" id="rv1" style="width:0%;background:#9F99E8;"><div class="rv-dot" style="background:#9F99E8;"></div></div></div><div class="rv-sc ap">6.48</div><div class="rv-pc">92.5%</div></div>
+    <div class="rv-row"><div class="rv-lbl">Utilidad Percibida</div><div class="rv-tr"><div class="rv-fill" id="rv2" style="width:0%;background:#BDB9F0;"><div class="rv-dot" style="background:#BDB9F0;"></div></div></div><div class="rv-sc ap">6.27</div><div class="rv-pc">89.6%</div></div>
+    <div class="rv-row"><div class="rv-lbl">Intención Conductual</div><div class="rv-tr"><div class="rv-fill" id="rv3" style="width:0%;background:#D3D0F8;"><div class="rv-dot" style="background:#D3D0F8;"></div></div></div><div class="rv-sc ap">6.26</div><div class="rv-pc">89.5%</div></div>
+    <div class="rv-div"></div>
+    <div class="rv-st">Teoría de Flujo — Factores Experienciales (Csikszentmihalyi, 1990)</div>
+    <div class="rv-row"><div class="rv-lbl">Alegría Percibida</div><div class="rv-tr"><div class="rv-fill" id="rv4" style="width:0%;background:#1D9E75;"><div class="rv-dot" style="background:#1D9E75;"></div></div></div><div class="rv-sc at">6.51</div><div class="rv-pc">93.0%</div></div>
+    <div class="rv-row"><div class="rv-lbl">Atención Enfocada</div><div class="rv-tr"><div class="rv-fill" id="rv5" style="width:0%;background:#378ADD;"><div class="rv-dot" style="background:#378ADD;"></div></div></div><div class="rv-sc" style="color:#378ADD;">5.87</div><div class="rv-pc">83.8%</div></div>
+    <div class="rv-row"><div class="rv-lbl">Telepresencia</div><div class="rv-tr"><div class="rv-fill" id="rv6" style="width:0%;background:#7FB9EF;"><div class="rv-dot" style="background:#7FB9EF;"></div></div></div><div class="rv-sc" style="color:#378ADD;">5.86</div><div class="rv-pc">83.7%</div></div>
+  </div>
+  <div class="two-col">
+    <div class="card"><h3>Hallazgos por ítem</h3>
+      <div class="row"><span class="rl">"La RV para MF fue emocionante" (ítem 10)</span><span class="rv ap">M=6.79 · Mín=6</span></div>
+      <div class="row"><span class="rl">"Me gustó usar la RV para MF" (ítem 20)</span><span class="rv ap">M=6.75 · DE=.585</span></div>
+      <div class="row"><span class="rl">"Olvidé mi entorno inmediato" (ítem 13)</span><span class="rv" style="color:#888780;">M=5.71 · DE=1.36</span></div>
+      <div class="row"><span class="rl">Ítems con r negativa</span><span class="rv"><span class="ab ab-l">Ítem 9</span><span class="ab ab-l">Ítem 15</span></span></div>
+    </div>
+    <div class="card"><h3>Confiabilidad</h3>
+      <div class="row"><span class="rl">α global (21 ítems)</span><span class="rv"><span class="ab ab-o">α=.710 aceptable</span></span></div>
+      <div class="row"><span class="rl">Atención Enfocada</span><span class="rv"><span class="ab ab-g">α=.828 bueno</span></span></div>
+      <div class="row"><span class="rl">ω McDonald (rango)</span><span class="rv">.413 – .846 (> α en todos)</span></div>
+      <div style="font-size:11px;color:var(--text3);margin-top:8px;line-height:1.5;">α bajos por subescala = efecto techo + 3 ítems por constructo + congenericidad. Instrumento original robusto (CR .78–.92).</div>
+    </div>
+  </div>
+</div>
+
+<!-- S8 SIMS -->
+<div class="slide" id="s8">
+  <div class="slide-header"><div class="slide-num">09 / 12</div><div><div class="slide-title">Motivación Situacional — SIMS</div><div class="slide-sub">Guay et al. (2000) · Teoría de la Autodeterminación (Deci & Ryan, 1985) · n=29 · Likert 1–7</div></div></div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem;">
+    <div class="scard"><div class="sv ap">6.11</div><div class="sl">Motivación Intrínseca · 87.3%</div><div class="sa ap">α=.799 · ω=.819</div></div>
+    <div class="scard"><div class="sv ap">5.98</div><div class="sl">Regulación Identificada · 85.4%</div><div class="sa ap">α=.783 · ω=.835</div></div>
+    <div class="scard"><div class="sv" style="color:#888780;">2.95</div><div class="sl">Regulación Externa · 42.1%</div><div class="sa" style="color:#888780;">α=.870 · ω=.875</div></div>
+    <div class="scard"><div class="sv" style="color:#888780;">2.12</div><div class="sl">Desmotivación · 30.3%</div><div class="sa" style="color:#888780;">α=.861 · ω=.877</div></div>
+  </div>
+  <div class="chart-half"><canvas id="simsChart"></canvas></div>
+  <div class="two-col">
+    <div class="card"><h3>Ítems más relevantes</h3>
+      <div class="row"><span class="rl">MI: "Porque es placentera" (ítem 5)</span><span class="rv">M=6.38</span></div>
+      <div class="row"><span class="rl">MI: "Me siento bien al realizarla" (ítem 13)</span><span class="rv">M=6.31</span></div>
+      <div class="row"><span class="rl">RI: "Es buena para mí" (ítem 6)</span><span class="rv">M=6.24</span></div>
+      <div class="row"><span class="rl">RE: "Porque no tengo elección" (ítem 11)</span><span class="rv" style="color:#888780;">M=2.07</span></div>
+      <div class="row"><span class="rl">DM: "No sé qué me aporta" (ítem 12)</span><span class="rv" style="color:#888780;">M=1.62</span></div>
+    </div>
+    <div class="card"><h3>Necesidades básicas de la TAD satisfechas</h3>
+      <div class="tpi"><div class="tpk" style="min-width:75px;">Autonomía</div><div class="tpv">Experiencias meditativas con apropiación subjetiva; trascendieron el formato de clase.</div></div>
+      <div class="tpi"><div class="tpk" style="min-width:75px;">Competencia</div><div class="tpv">Progresión S1→S4: recursos emocionales aplicables de inmediato en las evaluaciones.</div></div>
+      <div class="tpi"><div class="tpk" style="min-width:75px;">Relación</div><div class="tpv">Gamificación en equipos: interacción colaborativa y vínculos interpersonales.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S9 CONCLUSIONES -->
+<div class="slide" id="s9">
+  <div class="slide-header"><div class="slide-num">10 / 12</div><div><div class="slide-title">Conclusiones por Eje de Análisis</div><div class="slide-sub">Respuesta a las tres preguntas de investigación</div></div></div>
+  <div class="cb"><div class="cdot" style="background:#534AB7;"></div><div><div class="ct">Rendimiento académico — efecto elevador y homogeneizador simultáneo</div><div class="cbody">El promedio grupal en la EAI aumentó de 37.8% a 82.3% (+44.5 p.p.), t(29)=−16.0, p&lt;.001, d=2.93. La prueba de Wilcoxon (W=.00, rb=−1.00) evidenció que la totalidad del grupo mejoró. La DE se redujo de 12.4 a 7.17. El diseño preexperimental no permite aislar el efecto de cada componente, pero sí afirmar que la estrategia generó un cambio sustancial, consistente y generalizado.</div></div></div>
+  <div class="cb"><div class="cdot" style="background:#1D9E75;"></div><div><div class="ct">Aceptación de la RV — valoración positiva en población sin experiencia previa</div><div class="cbody">La media global fue 6.28/7 (89.7%). Los constructos TAM superaron los de Huang et al. (2023): Actitud (6.70 vs. 6.15), Facilidad de Uso (6.48 vs. 5.72), Utilidad Percibida (6.27 vs. 5.36). Especialmente relevante dado que el 96.4% carecía de experiencia previa con RV. Los constructos de Flujo mostraron mayor variabilidad, atribuible a la tensión entre la dirección atencional interior del MF y la estimulación visual externa de la RV (Jo et al., 2024; Riches y Nicholson, 2025).</div></div></div>
+  <div class="cb"><div class="cdot" style="background:#D85A30;"></div><div><div class="ct">Motivación situacional — perfil marcadamente autodeterminado en contexto obligatorio</div><div class="cbody">El ordenamiento MI (6.11) > RI (5.98) > RE (2.95) > DM (2.12) es coherente con el continuo de autodeterminación (Deci y Ryan, 1985), emergiendo en una asignatura obligatoria. El diseño instruccional satisfizo las tres necesidades psicológicas básicas de la TAD: autonomía, competencia y relación.</div></div></div>
+</div>
+
+<!-- S10 HALLAZGOS -->
+<div class="slide" id="s10">
+  <div class="slide-header"><div class="slide-num">11 / 12</div><div><div class="slide-title">Hallazgos Integradores e Implicaciones</div><div class="slide-sub">Convergencia de los tres ejes · Teoría y práctica</div></div></div>
+  <div class="slbl">Convergencia de los tres ejes</div>
+  <div class="card" style="margin-bottom:1rem;"><div class="cbody" style="font-size:12px;line-height:1.7;">Los tres ejes configuran un panorama coherente que refleja la lógica del diseño instruccional basado en TPACK. La <strong>Teoría de Ampliación y Construcción (Fredrickson, 2001)</strong> sustenta que las sesiones de MF orientadas a activar emociones positivas precedieron las evaluaciones de mayor exigencia cognitiva. La <strong>gamificación progresiva</strong> aplicó el principio de novedad sostenida para prevenir la fatiga motivacional. La <strong>evaluación formativa</strong> desplazó el foco del juicio calificativo al aprendizaje como proceso. La propuesta se inscribe en <strong>Educación 4.0</strong> (Bonfield et al., 2020; Miranda et al., 2021): formación simultánea en competencias disciplinares y socioemocionales.</div></div>
+  <div class="slbl">Implicaciones prácticas</div>
+  <div class="two-col">
+    <div style="display:flex;flex-direction:column;gap:.625rem;">
+      <div class="ib"><div class="in">1</div><div class="ibody"><strong>Coherencia funcional MF → tarea</strong> como principio de diseño replicable: seleccionar cada práctica según la demanda cognitiva y emocional de la actividad subsecuente.</div></div>
+      <div class="ib"><div class="in">2</div><div class="ibody"><strong>Barrera técnica baja:</strong> pese a que el 96.4% carecía de experiencia con RV, la Facilidad de Uso Percibida alcanzó 92.5% (M=6.48/7).</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.625rem;">
+      <div class="ib"><div class="in">3</div><div class="ibody"><strong>Gamificación formativa no sumativa:</strong> contribuyó a disminuir la ansiedad de evaluación y sostener la motivación a lo largo de la intervención.</div></div>
+      <div class="ib"><div class="in">4</div><div class="ibody"><strong>Condiciones ambientales:</strong> la proximidad entre visores generó interferencia de audio. Se recomienda separación física adecuada o espacios de mayor amplitud.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S11 LIMITACIONES -->
+<div class="slide" id="s11">
+  <div class="slide-header"><div class="slide-num">12 / 12</div><div><div class="slide-title">Limitaciones y Líneas de Investigación Futura</div><div class="slide-sub">Capítulo 5</div></div></div>
+  <div class="two-col">
+    <div>
+      <div class="slbl">Limitaciones del estudio</div>
+      <div class="card">
+        <div class="fb" style="padding:.75rem 0;"><div class="fn" style="font-size:14px;color:#D85A30;">▲</div><div class="fbody"><strong>Diseño preexperimental sin grupo control:</strong> impide establecer relaciones causales ni aislar el efecto de cada componente.</div></div>
+        <div class="fb" style="padding:.75rem 0;"><div class="fn" style="font-size:14px;color:#D85A30;">▲</div><div class="fbody"><strong>Tamaño y tipo de muestra:</strong> n=30, no probabilístico, de un único programa. Limita la generalización.</div></div>
+        <div class="fb" style="padding:.75rem 0;"><div class="fn" style="font-size:14px;color:#D85A30;">▲</div><div class="fbody"><strong>Adaptación del cuestionario RV:</strong> correlaciones negativas en ítems 9 y 15; α &lt;.50 en cinco de siete constructos por efecto techo, brevedad y congenericidad.</div></div>
+        <div class="fb" style="padding:.75rem 0;border-bottom:none;"><div class="fn" style="font-size:14px;color:#D85A30;">▲</div><div class="fbody"><strong>Temporalidad:</strong> SIMS y cuestionario RV aplicados una sola vez, sin examen de estabilidad temporal.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="slbl">Líneas de investigación futura</div>
+      <div class="card">
+        <div class="fb"><div class="fn">1</div><div class="fbody"><strong>Diseño experimental o cuasiexperimental</strong> con grupo control para aislar efectos de cada componente: instrucción, MF con RV, MF sin RV y gamificación.</div></div>
+        <div class="fb"><div class="fn">2</div><div class="fbody"><strong>Ampliación muestral y diversificación</strong> para valorar replicabilidad en contextos disciplinares distintos al odontológico.</div></div>
+        <div class="fb"><div class="fn">3</div><div class="fbody"><strong>Refinamiento psicométrico:</strong> reformular ítems 9 y 15, aumentar reactivos por constructo y realizar AFC con muestra mayor.</div></div>
+        <div class="fb"><div class="fn">4</div><div class="fbody"><strong>Medidas fisiológicas</strong> (VFC, conductancia electrodérmica, EEG) como indicadores objetivos complementarios al autorreporte.</div></div>
+        <div class="fb" style="border-bottom:none;"><div class="fn">5</div><div class="fbody"><strong>Estudios longitudinales</strong> sobre permanencia de efectos en rendimiento e incorporación del MF como hábito personal.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="chg(-1)" disabled>← Anterior</button>
+  <div class="dots" id="dotsCont"></div>
+  <button class="nav-btn" id="nextBtn" onclick="chg(1)">Siguiente →</button>
+</div>
+</div>
+
+<script>
+let cur=0,total=12;
+const slides=document.querySelectorAll('.slide');
+const dc=document.getElementById('dotsCont');
+const lbls=['Portada','Participantes','TPACK','Programa MF','Instrumentos','Descriptivos','Inferencial','Acept. RV','Motivación','Conclusiones','Hallazgos','Limitaciones'];
+for(let i=0;i<total;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.title=lbls[i];d.onclick=()=>goTo(i);dc.appendChild(d);}
+function goTo(n){
+  slides[cur].classList.remove('active');dc.children[cur].classList.remove('active');
+  cur=n;slides[cur].classList.add('active');dc.children[cur].classList.add('active');
+  document.getElementById('prevBtn').disabled=cur===0;
+  document.getElementById('nextBtn').disabled=cur===total-1;
+  if(cur===5&&!window.pd)initPerf();
+  if(cur===7&&!window.rv)initRV();
+  if(cur===8&&!window.sm)initSIMS();
+}
+function chg(d){goTo(cur+d);}
+function initPerf(){window.pd=true;
+  new Chart(document.getElementById('perfChart'),{type:'bar',
+    data:{labels:['Preprueba','Posprueba'],datasets:[
+      {label:'Media',data:[37.8,82.3],backgroundColor:['#B4B2A9','#7F77DD'],borderRadius:6,barThickness:70},
+      {label:'Mínimo',data:[10.9,60.9],backgroundColor:['rgba(180,178,169,.4)','rgba(127,119,221,.35)'],borderRadius:4,barThickness:30}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw}%`}}},
+      scales:{y:{min:0,max:105,ticks:{stepSize:20,color:'#9a9890',callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{color:'#5f5e5a'},grid:{display:false}}}
+    }
+  });
+}
+function initRV(){window.rv=true;
+  const frac=[6.70,6.48,6.27,6.26,6.51,5.87,5.86].map(v=>v/7*100);
+  const ids=['rv0','rv1','rv2','rv3','rv4','rv5','rv6'];
+  setTimeout(()=>{ids.forEach((id,i)=>{const el=document.getElementById(id);if(el)el.style.width=frac[i]+'%';});},150);
+}
+function initSIMS(){window.sm=true;
+  new Chart(document.getElementById('simsChart'),{type:'bar',
+    data:{labels:['Motivación Intrínseca','Regulación Identificada','Regulación Externa','Desmotivación'],
+      datasets:[{data:[6.11,5.98,2.95,2.12],backgroundColor:['#7F77DD','#AFA9EC','#B4B2A9','#D3D1C7'],borderRadius:5,barThickness:48}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` M=${c.raw.toFixed(2)} · ${(c.raw/7*100).toFixed(1)}% escala`}}},
+      scales:{y:{min:0,max:7,ticks:{stepSize:1,color:'#9a9890',callback:v=>v+'/7'},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{color:'#5f5e5a',font:{size:11},maxRotation:0},grid:{display:false}}}
+    }
+  });
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'&&cur<total-1)chg(1);
+  if(e.key==='ArrowLeft'&&cur>0)chg(-1);
+});
+</script>
+</body>
+</html>
