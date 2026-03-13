@@ -281,7 +281,7 @@ body{font-family:'Source Sans 3',sans-serif;color:var(--text1);background:var(--
 
 <!-- S6 INFERENCIAL -->
 <div class="slide" id="s6">
-  <div class="slide-header"><div class="slide-num">07 / 12</div><div><div class="slide-title">Rendimiento Académico — Estadística Inferencial</div><div class="slide-sub">Prueba t pareada + Wilcoxon · Diferencia por sexo · Tamaño del efecto</div></div></div>
+  <div class="slide-header"><div class="slide-num">07 / 12</div><div><div class="slide-title">Rendimiento Académico — Estadística Inferencial</div><div class="slide-sub">Prueba t pareada + Wilcoxon · Tamaño del efecto</div></div></div>
   <div style="background:#EEEDFE;border-left:3px solid #534AB7;border-radius:var(--radius-md);padding:.6rem 1rem;margin-bottom:.875rem;font-size:11.5px;color:#2a2560;line-height:1.55;"><strong>Pregunta de investigación 1:</strong> ¿Qué diferencia significativa existe respecto al rendimiento académico de estudiantes que llevan el curso de Tecnologías de la Comunicación y Gestión de la Información quienes utilizan la técnica de Mindfulness haciendo uso de Realidad Virtual como estrategia didáctica?</div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.25rem;">
     <div class="scard"><div class="sv ap">t = −16.0</div><div class="sl">t Student · gl=29 · p &lt; .001</div><div class="sa at">Altamente significativo</div></div>
@@ -289,18 +289,13 @@ body{font-family:'Source Sans 3',sans-serif;color:var(--text1);background:var(--
     <div class="scard"><div class="sv at">W = .00</div><div class="sl">Wilcoxon · p&lt;.001 · rb=−1.00</div><div class="sa at">30 / 30 mejoraron</div></div>
     <div class="scard"><div class="sv ap">SW diff</div><div class="sl">Normalidad diferencias W=.970, p=.542</div><div class="sa ap">Supuesto cumplido</div></div>
   </div>
-  <div class="two-col">
-    <div class="card"><h3>Prueba t para muestras pareadas</h3>
-      <div class="row"><span class="rl">Diferencia de medias</span><span class="rv">−44.6 pts (EE=2.78)</span></div>
-      <div class="row"><span class="rl">t / gl / p</span><span class="rv">−16.0 / 29 / &lt;.001 <span class="sig">Sig.</span></span></div>
-      <div class="row"><span class="rl">d de Cohen</span><span class="rv">2.93 · IC95%: [2.09, 3.76]</span></div>
-      <div class="row"><span class="rl">Wilcoxon W / rb</span><span class="rv">.00 / −1.00</span></div>
-    </div>
-    <div class="card"><h3>Diferencia por sexo (posprueba)</h3>
-      <div class="row"><span class="rl">t / gl / p</span><span class="rv">2.09 / 28 / .045 <span class="sig">Sig.</span></span></div>
-      <div class="row"><span class="rl">Diferencia de medias</span><span class="rv">5.20 pts (EE=2.48)</span></div>
-      <div class="row"><span class="rl">d de Cohen</span><span class="rv">0.767 · IC95%: [.016, 1.50]</span></div>
-      <div class="row"><span class="rl">U Mann-Whitney / rb</span><span class="rv">64.5 · p=.049 / −.424</span></div>
+  <div class="card" style="margin-bottom:.875rem;">
+    <h3>Prueba t para muestras pareadas</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;">
+      <div><div class="row"><span class="rl">Diferencia de medias</span><span class="rv">−44.6 pts (EE=2.78)</span></div>
+      <div class="row"><span class="rl">t / gl / p</span><span class="rv">−16.0 / 29 / &lt;.001 <span class="sig">Sig.</span></span></div></div>
+      <div><div class="row"><span class="rl">d de Cohen</span><span class="rv">2.93 · IC95%: [2.09, 3.76]</span></div>
+      <div class="row"><span class="rl">Wilcoxon W / rb</span><span class="rv">.00 / −1.00</span></div></div>
     </div>
   </div>
   <div class="note"><strong>Conclusión:</strong> Se rechaza la hipótesis nula. La estrategia produjo un cambio de magnitud extraordinaria (d=2.93). La prueba de Wilcoxon (rb=−1.00) confirma que los 30 estudiantes mejoraron, pasando de 0% a 100% con nivel aprobatorio.</div>
